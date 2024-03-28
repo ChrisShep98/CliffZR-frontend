@@ -333,6 +333,11 @@
     prop-types "^15.8.1"
     react-is "^18.2.0"
 
+"@next-auth/prisma-adapter@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@next-auth/prisma-adapter/-/prisma-adapter-1.0.7.tgz#86195e9cc5a23a9e71370c7e8745b630388143b1"
+  integrity sha512-Cdko4KfcmKjsyHFrWwZ//lfLUbcLqlyFqjd/nYE2m3aZ7tjMNUjpks47iw7NTCnXf+5UWz5Ypyt1dSs1EP5QJw==
+
 "@next/env@14.0.4":
   version "14.0.4"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-14.0.4.tgz#d5cda0c4a862d70ae760e58c0cd96a8899a2e49a"
@@ -420,6 +425,11 @@
   version "2.11.8"
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
+
+"@prisma/client@^5.11.0":
+  version "5.11.0"
+  resolved "https://registry.yarnpkg.com/@prisma/client/-/client-5.11.0.tgz#d8e55fab85163415b2245fb408b9106f83c8106d"
+  integrity sha512-SWshvS5FDXvgJKM/a0y9nDC1rqd7KG0Q6ZVzd+U7ZXK5soe73DJxJJgbNBt2GNXOa+ysWB4suTpdK5zfFPhwiw==
 
 "@prisma/debug@5.11.0":
   version "5.11.0"
