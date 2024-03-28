@@ -6,12 +6,21 @@ import { useSession } from "next-auth/react";
 
 const UserInfo = () => {
   const { data: session } = useSession();
+  console.log(session);
 
   return (
     <Stack>
-      <Typography>Hello {session?.user?.email}</Typography>
+      <Typography>Hello {session?.user?.username}</Typography>
       <Typography>Email: HARD_CODED_EMAIL</Typography>
-      <Button type="submit" onClick={() => signOut()}>
+      <Button
+        type="submit"
+        onClick={() =>
+          signOut({
+            redirect: true,
+            callbackUrl: `${window.location.origin}/`,
+          })
+        }
+      >
         Logout
       </Button>
     </Stack>

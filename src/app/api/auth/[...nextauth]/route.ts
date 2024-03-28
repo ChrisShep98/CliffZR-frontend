@@ -1,10 +1,11 @@
-import { connectMongoDB } from "@/app/lib/mongodb";
-import User from "@/app/models/Users";
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { db } from "@/app/lib/db";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
-const handler = NextAuth({
+const handler: NextAuthOptions = NextAuth({
+  adapter: PrismaAdapter(db),
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. 'Sign in with...')
@@ -17,27 +18,50 @@ const handler = NextAuth({
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials: any) {
-        console.log(credentials);
-
+      async authorize(credentials) {
         try {
-          await connectMongoDB();
-          const user = await User.findOne({ username: credentials.username });
-          const passwordsMatch = await bcrypt.compare(credentials.password, user.password);
+          if (!credentials?.username || !credentials?.password) {
+            return null;
+          }
 
+          const user = await db.user.findUnique({
+            where: { username: credentials.username },
+          });
           if (!user) {
             return null;
-          } else if (!passwordsMatch) {
-            return null;
-          } else {
-            return user;
           }
+          const passwordsMatch = await bcrypt.compare(
+            credentials.password,
+            user.password
+          );
+
+          if (!passwordsMatch) {
+            return null;
+          }
+
+          // return user;
+          return {
+            id: user.id + "",
+            username: user.username,
+            email: user.email,
+          };
         } catch (error) {
           console.log("Error: ", error);
+          return null;
         }
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }: any) {
+      if (user) token.user = user;
+      return token;
+    },
+    async session({ session, token }: any) {
+      session.user = token.user;
+      return session;
+    },
+  },
   session: {
     strategy: "jwt",
   },

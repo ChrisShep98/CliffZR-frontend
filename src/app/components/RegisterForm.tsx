@@ -18,7 +18,7 @@ const RegisterForm = () => {
       return;
     }
     try {
-      const res = await fetch("api/register", {
+      const res = await fetch("api/user", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -47,10 +47,25 @@ const RegisterForm = () => {
     <Stack height={"100vh"} justifyContent={"center"}>
       <Stack justifyContent={"center"} alignItems={"center"} spacing={1}>
         <Typography>Register an account here!</Typography>
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
-          <input onChange={(e) => setUsername(e.target.value)} type="text" placeholder="User Name"></input>
-          <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email"></input>
-          <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password"></input>
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", flexDirection: "column" }}
+        >
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="Email"
+          ></input>
+          <input
+            onChange={(e) => setUsername(e.target.value)}
+            type="text"
+            placeholder="User Name"
+          ></input>
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="Password"
+          ></input>
           <button typeof="submit">Login</button>
         </form>
         {error && <Typography color={"red"}>{error}</Typography>}
