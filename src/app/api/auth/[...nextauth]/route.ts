@@ -1,11 +1,11 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
-import { db } from "@/app/lib/db";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+// import bcrypt from "bcryptjs";
+// import { db } from "@/app/lib/db";
+// import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 const handler: NextAuthOptions = NextAuth({
-  adapter: PrismaAdapter(db),
+  // adapter: PrismaAdapter(db),
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. 'Sign in with...')
@@ -24,27 +24,41 @@ const handler: NextAuthOptions = NextAuth({
             return null;
           }
 
-          const user = await db.user.findUnique({
-            where: { username: credentials.username },
+          const res = await fetch("http://localhost:8080/users/login", {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              username: credentials?.username,
+              password: credentials?.password,
+            }),
           });
-          if (!user) {
-            return null;
-          }
-          const passwordsMatch = await bcrypt.compare(
-            credentials.password,
-            user.password
-          );
 
-          if (!passwordsMatch) {
-            return null;
-          }
+          const user = await res.json();
+          console.log(user);
 
-          // return user;
-          return {
-            id: user.id + "",
-            username: user.username,
-            email: user.email,
-          };
+          // const user = await db.user.findUnique({
+          //   where: { username: credentials.username },
+          // });
+          // if (!user) {
+          //   return null;
+          // }
+          // const passwordsMatch = await bcrypt.compare(
+          //   credentials.password,
+          //   user.password
+          // );
+
+          // if (!passwordsMatch) {
+          //   return null;
+          // }
+
+          return user;
+          // return {
+          //   id: user.id + "",
+          //   username: user.username,
+          //   email: user.email,
+          // };
         } catch (error) {
           console.log("Error: ", error);
           return null;
