@@ -18,7 +18,7 @@ const RegisterForm = () => {
       return;
     }
     try {
-      const res = await fetch("api/user", {
+      const res = await fetch("http://localhost:8080/users/register", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -33,9 +33,8 @@ const RegisterForm = () => {
         const form = event.target;
         form.reset();
         router.push("/dashboard");
-      } else if (res.status === 400) {
-        setError("User with that email already exists");
-        console.log("User with that email already exists");
+      } else if (res.status === 404) {
+        setError("User with that username already exists");
       }
     } catch (error) {
       setError("Error during registration");
