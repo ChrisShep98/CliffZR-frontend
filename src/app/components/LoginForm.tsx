@@ -1,7 +1,7 @@
 "use client";
 import { Stack, Typography } from "@mui/material";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -18,7 +18,7 @@ const LoginForm = () => {
     }
   }, [session, router]);
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
       const res = await signIn("credentials", {
@@ -40,9 +40,20 @@ const LoginForm = () => {
     <Stack height={"100vh"} justifyContent={"center"}>
       <Stack justifyContent={"center"} alignItems={"center"} spacing={1}>
         <Typography>Enter your login details</Typography>
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
-          <input onChange={(e) => setUsername(e.target.value)} type="text" placeholder="Username"></input>
-          <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password"></input>
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", flexDirection: "column" }}
+        >
+          <input
+            onChange={(e) => setUsername(e.target.value)}
+            type="text"
+            placeholder="Username"
+          ></input>
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="Password"
+          ></input>
           <button type="submit">Login</button>
         </form>
         {error && <Typography color={"red"}>{error}</Typography>}
