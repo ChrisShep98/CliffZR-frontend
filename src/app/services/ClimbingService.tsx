@@ -8,8 +8,8 @@ export async function saveContact(contact: any) {
   return response.json();
 }
 
-export async function getContacts() {
-  const response = await fetch(API_URL);
+export async function getUserBoulderingGrades(username: string) {
+  const response = await fetch(`http://localhost:8080/users/${username}`);
   const data = await response.json();
   return data;
 }

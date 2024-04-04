@@ -36,7 +36,6 @@ const handler: NextAuthOptions = NextAuth({
           });
 
           const user = await res.json();
-          console.log(user);
 
           // const user = await db.user.findUnique({
           //   where: { username: credentials.username },

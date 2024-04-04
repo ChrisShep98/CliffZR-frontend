@@ -1,5 +1,5 @@
 import React from "react";
-import UserInfo from "../components/UserInfo";
+import UserInfo from "../components/Dashboard";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
